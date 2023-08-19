@@ -62,7 +62,7 @@ set(NLOHMANN_JSON_CONFIG_INSTALL_DIR        "${CMAKE_INSTALL_DATADIR}/cmake/${PR
 set(NLOHMANN_JSON_INCLUDE_INSTALL_DIR       "${CMAKE_INSTALL_INCLUDEDIR}")
 set(NLOHMANN_JSON_TARGETS_EXPORT_NAME       "${PROJECT_NAME}Targets")
 set(NLOHMANN_JSON_CMAKE_CONFIG_TEMPLATE     "cmake/config.cmake.in")
-set(NLOHMANN_JSON_CMAKE_CONFIG_DIR          "${CMAKE_CURRENT_BINARY_DIR}")
+set(NLOHMANN_JSON_CMAKE_CONFIG_DIR          "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(NLOHMANN_JSON_CMAKE_VERSION_CONFIG_FILE "${NLOHMANN_JSON_CMAKE_CONFIG_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
 set(NLOHMANN_JSON_CMAKE_PROJECT_CONFIG_FILE "${NLOHMANN_JSON_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Config.cmake")
 set(NLOHMANN_JSON_CMAKE_PROJECT_TARGETS_FILE "${NLOHMANN_JSON_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Targets.cmake")
@@ -161,15 +161,15 @@ include(CMakePackageConfigHelpers)
 # use a custom package version config file instead of
 # write_basic_package_version_file to ensure that it's architecture-independent
 # https://github.com/nlohmann/json/issues/1697
-configure_file(
+configure_package_config_file(
     "cmake/nlohmann_jsonConfigVersion.cmake.in"
     ${NLOHMANN_JSON_CMAKE_VERSION_CONFIG_FILE}
-    @ONLY
+    INSTALL_DESTINATION ${NLOHMANN_JSON_CONFIG_INSTALL_DIR}
 )
-configure_file(
+configure_package_config_file(
     ${NLOHMANN_JSON_CMAKE_CONFIG_TEMPLATE}
     ${NLOHMANN_JSON_CMAKE_PROJECT_CONFIG_FILE}
-    @ONLY
+    INSTALL_DESTINATION ${NLOHMANN_JSON_CONFIG_INSTALL_DIR}
 )
 
 if(JSON_Install)
